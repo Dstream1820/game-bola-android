@@ -1,0 +1,1000 @@
+<!DOCTYPE html><html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Responsive FHD Canvas 9:16</title>
+
+<style>
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* =========================================================
+       BODY
+    ========================================================= */
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        min-height: 100vh;
+
+        background-color: #1a1a1a;
+
+        overflow: hidden;
+    }
+
+
+    /* =========================================================
+       CANVAS 9:16
+    ========================================================= */
+
+    .canvas-9-16 {
+        width: calc((100vh - 40px) * (9 / 16));
+        height: calc(100vh - 40px);
+
+        max-width: 1080px;
+        max-height: 1920px;
+
+        aspect-ratio: 9 / 16;
+
+        position: relative;
+        overflow: hidden;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: sans-serif;
+
+        background-image:
+            url('data/background/menu_utama.dat');
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.5);
+
+        transition:
+            max-width 0.3s ease,
+            max-height 0.3s ease,
+            width 0.3s ease,
+            height 0.3s ease;
+    }
+
+
+    /* =========================================================
+       TOMBOL UTAMA
+    ========================================================= */
+
+    .main-buttons {
+        width: 70%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        gap: 15px;
+    }
+
+
+    .main-buttons.hidden {
+        display: none;
+    }
+
+
+    /* =========================================================
+       TOMBOL MULAI / PENGATURAN / KELUAR
+    ========================================================= */
+
+    .btn-start,
+    .btn-settings {
+        width: 80%;
+
+        background-color:
+            rgba(128, 138, 142, 0.5);
+
+        color: #000000;
+
+        border: none;
+
+        border-radius:
+            calc(55vh * 0.01);
+
+        font-size:
+            calc(55vh * 0.04);
+
+        font-weight: 600;
+
+        padding:
+            calc(55vh * 0.02) 0;
+
+        cursor: pointer;
+
+        transition:
+            background-color 0.2s,
+            transform 0.1s;
+    }
+
+
+    .btn-start:hover,
+    .btn-settings:hover {
+        background-color:
+            rgba(128, 138, 142, 0.7);
+    }
+
+
+    .btn-start:active,
+    .btn-settings:active {
+        transform: scale(0.98);
+    }
+
+
+    /* =========================================================
+       MODAL OVERLAY
+    ========================================================= */
+
+    .modal-overlay {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color:
+            rgba(0, 0, 0, 0.2);
+
+        z-index: 100;
+
+        opacity: 0;
+        pointer-events: none;
+
+        transition:
+            opacity 0.2s ease;
+    }
+
+
+    .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+
+    /* =========================================================
+       KOTAK PENGATURAN
+    ========================================================= */
+
+    .settings-menu {
+        position: relative;
+
+        width: 90%;
+        height: auto;
+
+        min-height:
+            calc(55vh * 0.5);
+
+        padding:
+            calc(55vh * 0.04);
+
+        background-color:
+            rgba(128, 138, 142, 0.5);
+
+        color: #000000;
+    }
+
+
+    .settings-menu h2 {
+        margin-bottom:
+            calc(55vh * 0.04);
+
+        font-size:
+            calc(55vh * 0.045);
+
+        font-weight: 500;
+
+        text-align: left;
+    }
+
+
+    /* =========================================================
+       ISI PENGATURAN
+    ========================================================= */
+
+    .settings-content {
+        display: flex;
+        flex-direction: column;
+
+        gap:
+            calc(55vh * 0.025);
+
+        padding-left:
+            calc(55vh * 0.04);
+    }
+
+
+    .setting-row {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        font-size:
+            calc(55vh * 0.035);
+
+        font-weight: 500;
+    }
+
+
+    .setting-label {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+
+    .setting-control {
+        width: 50%;
+
+        display: flex;
+        align-items: center;
+    }
+
+
+    /* =========================================================
+       SLIDER
+    ========================================================= */
+
+    .setting-control input[type="range"] {
+        width: 100%;
+
+        height:
+            calc(55vh * 0.006);
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        background: #000000;
+
+        outline: none;
+    }
+
+
+    .setting-control input[type="range"]::-webkit-slider-thumb {
+        width:
+            calc(55vh * 0.03);
+
+        height:
+            calc(55vh * 0.03);
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        border-radius: 50%;
+
+        background: #000000;
+
+        cursor: pointer;
+    }
+
+
+    /* =========================================================
+       LANGUAGE
+    ========================================================= */
+
+    .setting-control select {
+        width: 100%;
+
+        padding:
+            calc(55vh * 0.005)
+            calc(55vh * 0.02);
+
+        font-size:
+            calc(55vh * 0.03);
+
+        font-family: sans-serif;
+
+        background-color:
+            rgba(128, 138, 142, 0.4);
+
+        color: #000000;
+
+        border:
+            1px solid #000000;
+
+        border-radius: 3px;
+
+        cursor: pointer;
+
+        outline: none;
+    }
+
+
+    /* =========================================================
+       TOMBOL TUTUP
+    ========================================================= */
+
+    .btn-invisible-close {
+        position: absolute;
+
+        right: 10px;
+        bottom: 10px;
+
+        background: none;
+
+        border: none;
+
+        font-size:
+            calc(55vh * 0.02);
+
+        color:
+            rgba(0, 0, 0, 0.3);
+
+        cursor: pointer;
+    }
+
+
+
+/* ===== GAMEPLAY: V13 FIX ===== */
+.game-screen{position:absolute;inset:0;display:none;background:#fff;overflow:hidden}
+.game-screen.active{display:block}
+#gameCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.game-hud{position:absolute;left:0;right:0;top:10px;padding:0 15px;display:flex;justify-content:space-between;pointer-events:none;z-index:10}
+.hud-box{background:rgba(255,255,255,.85);border:2px solid #111;border-radius:6px;padding:5px 10px;color:#111;font-size:clamp(14px,3vw,25px);font-weight:bold}
+.game-result{position:absolute;inset:0;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.65);z-index:50}
+.game-result.active{display:flex}
+.result-box{width:80%;padding:25px;background:#fff;border:2px solid #000;border-radius:10px;text-align:center}
+.result-title{font-size:clamp(28px,7vw,55px);font-weight:bold;margin-bottom:15px}
+.result-score{font-size:clamp(18px,4vw,30px);margin-bottom:20px}
+.result-box button{width:100%;margin-top:8px;padding:12px;border:0;border-radius:7px;background:#999;color:#000;font-size:clamp(16px,3vw,25px)}
+</style>
+
+</head><body><!-- =========================================================
+     CANVAS UTAMA
+========================================================= -->
+
+<div
+    class="canvas-9-16"
+    id="appCanvas">
+
+
+    <!-- =====================================================
+         MENU UTAMA
+    ====================================================== -->
+
+    <div class="main-buttons">
+
+
+        <button
+            class="btn-start"
+            id="startBtn">
+
+            Mulai
+
+        </button>
+
+
+        <button
+            class="btn-settings"
+            id="openSettingsBtn">
+
+            Pengaturan
+
+        </button>
+
+
+        <button
+            class="btn-settings"
+            id="exitBtn">
+
+            Keluar
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MENU PENGATURAN
+    ====================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="settingsModal">
+
+
+        <div class="settings-menu">
+
+
+            <h2 id="settingsTitle">
+
+                Pengaturan
+
+            </h2>
+
+
+
+            <div class="settings-content">
+
+
+                <!-- =================================================
+                     SUARA GAME
+                ================================================== -->
+
+                <div class="setting-row">
+
+
+                    <div
+                        class="setting-label"
+                        id="gameSoundLabel">
+
+                        • Suara Game
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+
+                        <input
+                            type="range"
+                            id="gameSoundSlider"
+                            min="0"
+                            max="100"
+                            value="100">
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BGM
+                ================================================== -->
+
+                <div class="setting-row">
+
+
+                    <div
+                        class="setting-label"
+                        id="bgmLabel">
+
+                        • BGM
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+
+                        <input
+                            type="range"
+                            id="bgmSlider"
+                            min="0"
+                            max="100"
+                            value="100">
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     LANGUAGE
+                ================================================== -->
+
+                <div class="setting-row">
+
+
+                    <div
+                        class="setting-label"
+                        id="languageLabel">
+
+                        • Language
+
+                    </div>
+
+
+                    <div class="setting-control">
+
+
+                        <select id="languageSelect">
+
+
+                            <option value="id">
+
+                                Indonesia
+
+                            </option>
+
+
+                            <option value="en">
+
+                                English
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TUTUP
+            ================================================== -->
+
+            <button
+                class="btn-invisible-close"
+                id="closeSettingsBtn">
+
+                [Tutup]
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+<div class="game-screen" id="gameScreen">
+<canvas id="gameCanvas"></canvas>
+<div class="game-hud"><div class="hud-box">Score: <span id="scoreText">0</span></div><div class="hud-box"><span id="ballName">Mini</span></div></div>
+<div class="game-result" id="gameResult">
+<div class="result-box">
+<div class="result-title" id="resultTitle">GAME OVER</div>
+<div class="result-score" id="resultScore">Score: 0</div>
+<button id="restartBtn">Main Lagi</button>
+<button id="menuBtn">Menu Utama</button>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+
+<script>
+
+const bgm=new Audio('data/sound/bgm/BGM_Late_Check-In_Night.dat');
+bgm.loop=true;bgm.preload='auto';bgm.volume=1;
+let gameSoundVolume=1;
+function startBGM(){bgm.play().catch(()=>{})}
+window.addEventListener('load',startBGM);
+document.addEventListener('click',startBGM,{once:true});
+document.addEventListener('touchstart',startBGM,{once:true});
+document.addEventListener('visibilitychange',()=>document.hidden?bgm.pause():startBGM());
+
+const mainButtons=document.querySelector('.main-buttons');
+const settingsOverlay=document.getElementById('settingsModal');
+const openSettingsBtn=document.getElementById('openSettingsBtn');
+const closeSettingsBtn=document.getElementById('closeSettingsBtn');
+const startBtn=document.getElementById('startBtn');
+const exitBtn=document.getElementById('exitBtn');
+const gameSoundSlider=document.getElementById('gameSoundSlider');
+const bgmSlider=document.getElementById('bgmSlider');
+const languageSelect=document.getElementById('languageSelect');
+
+openSettingsBtn.onclick=()=>{mainButtons.style.display='none';settingsOverlay.classList.add('active')};
+function closeSettings(){settingsOverlay.classList.remove('active');mainButtons.style.display='flex'}
+closeSettingsBtn.onclick=closeSettings;
+settingsOverlay.onclick=e=>{if(e.target===settingsOverlay)closeSettings()};
+gameSoundSlider.oninput=()=>gameSoundVolume=Number(gameSoundSlider.value)/100;
+bgmSlider.oninput=()=>bgm.volume=Number(bgmSlider.value)/100;
+
+const translations={
+id:{title:'Pengaturan',start:'Mulai',settings:'Pengaturan',exit:'Keluar',gameSound:'• Suara Game',language:'• Language',close:'[Tutup]'},
+en:{title:'Settings',start:'Start',settings:'Settings',exit:'Exit',gameSound:'• Game Sound',language:'• Language',close:'[Close]'}
+};
+languageSelect.onchange=()=>{
+const t=translations[languageSelect.value];
+document.getElementById('settingsTitle').textContent=t.title;
+startBtn.textContent=t.start;openSettingsBtn.textContent=t.settings;exitBtn.textContent=t.exit;
+document.getElementById('gameSoundLabel').textContent=t.gameSound;
+document.getElementById('languageLabel').textContent=t.language;
+closeSettingsBtn.textContent=t.close;
+};
+exitBtn.onclick=()=>alert(languageSelect.value==='en'?'Exit button pressed!':'Tombol Keluar ditekan!');
+
+const gameScreen=document.getElementById('gameScreen');
+const canvas=document.getElementById('gameCanvas');
+const ctx=canvas.getContext('2d');
+const scoreText=document.getElementById('scoreText');
+const ballName=document.getElementById('ballName');
+const gameResult=document.getElementById('gameResult');
+const resultTitle=document.getElementById('resultTitle');
+const resultScore=document.getElementById('resultScore');
+const restartBtn=document.getElementById('restartBtn');
+const menuBtn=document.getElementById('menuBtn');
+
+function resizeCanvas(){
+const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+const levels=[
+{name:'Mini',radius:16,color:'#FFD900'},
+{name:'Kecil',radius:22,color:'#FF9800'},
+{name:'Sedang',radius:29,color:'#F44336'},
+{name:'Besar',radius:37,color:'#E91E63'},
+{name:'Jumbo',radius:46,color:'#9C27B0'},
+{name:'Raksasa',radius:57,color:'#2196F3'},
+{name:'Super',radius:70,color:'#00BCD4'},
+{name:'Mega',radius:85,color:'#4CAF50'},
+{name:'Ultra',radius:102,color:'#CDDC39'},
+{name:'Titan',radius:122,color:'#B8860B'},
+{name:'Maksimal',radius:145,color:'#9C27FF'}
+];
+
+let balls=[],currentBall=null,score=0,running=false,dragging=false,hasMoved=false,pointerDownX=0,animationId=null,spawnCount=0,gameHasStartedDropping=false,lastTime=0;
+let arenaLeft=0,arenaRight=0,arenaBottom=0,dangerY=0;
+
+function updateArena(){
+const w=canvas.clientWidth,h=canvas.clientHeight;
+arenaLeft=w*.055;arenaRight=w*.945;arenaBottom=h*.90;dangerY=h*.28;
+}
+
+function drawArena(){
+const w=canvas.clientWidth,h=canvas.clientHeight;
+ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+ctx.strokeStyle='#111';ctx.lineWidth=5;
+ctx.beginPath();ctx.moveTo(arenaLeft,dangerY);ctx.lineTo(arenaLeft,arenaBottom);ctx.stroke();
+ctx.beginPath();ctx.moveTo(arenaRight,dangerY);ctx.lineTo(arenaRight,arenaBottom);ctx.stroke();
+ctx.beginPath();ctx.moveTo(arenaLeft,arenaBottom);ctx.lineTo(arenaRight,arenaBottom);ctx.stroke();
+ctx.strokeStyle='#f00';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(arenaLeft,dangerY);ctx.lineTo(arenaRight,dangerY);ctx.stroke();
+}
+
+function createCurrentBall(){
+if(!running)return;
+let level;
+if(spawnCount===0)level=0;
+else{
+let maxLevel=1;
+if(spawnCount>=8)maxLevel=2;
+if(spawnCount>=20)maxLevel=3;
+if(spawnCount>=40)maxLevel=4;
+level=Math.floor(Math.random()*(maxLevel+1));
+}
+spawnCount++;
+const data=levels[level];
+currentBall={level,x:(arenaLeft+arenaRight)/2,y:dangerY-70,radius:data.radius};
+ballName.textContent=data.name;
+}
+
+function drawBall(ball){
+const data=levels[ball.level];
+ctx.beginPath();ctx.arc(ball.x,ball.y,ball.radius,0,Math.PI*2);
+ctx.fillStyle=data.color;ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=2;ctx.stroke();
+}
+
+// Kontrol gameplay V13:
+// - Bisa mulai geser dari MANA SAJA di area game.
+// - Menyentuh layar tidak memindahkan bola ke titik sentuhan.
+// - Geser = bola ikut bergeser berdasarkan jarak geseran.
+// - Tap tanpa geser = jatuhkan bola di posisi terakhir.
+let pointerActive=false;
+let pointerMoved=false;
+let pointerStartX=0;
+let ballStartX=0;
+let pointerIdActive=null;
+const dragThreshold=6;
+
+function pointerPos(e){
+ const rect=canvas.getBoundingClientRect();
+ return {x:e.clientX-rect.left,y:e.clientY-rect.top};
+}
+
+canvas.addEventListener('pointerdown',e=>{
+ if(!running||!currentBall)return;
+ e.preventDefault();
+ const p=pointerPos(e);
+ pointerActive=true;
+ pointerMoved=false;
+ pointerStartX=p.x;
+ ballStartX=currentBall.x;
+ pointerIdActive=e.pointerId;
+ try{canvas.setPointerCapture(e.pointerId)}catch(_){ }
+});
+
+canvas.addEventListener('pointermove',e=>{
+ if(!running||!currentBall||!pointerActive||e.pointerId!==pointerIdActive)return;
+ e.preventDefault();
+ const p=pointerPos(e);
+ const dx=p.x-pointerStartX;
+
+ if(!pointerMoved && Math.abs(dx)>=dragThreshold){
+  pointerMoved=true;
+ }
+
+ if(pointerMoved){
+  const r=currentBall.radius;
+  currentBall.x=ballStartX+dx;
+  currentBall.x=Math.max(arenaLeft+r,Math.min(arenaRight-r,currentBall.x));
+ }
+});
+
+function endPointer(e){
+ if(!pointerActive||e.pointerId!==pointerIdActive)return;
+ const wasMoved=pointerMoved;
+ pointerActive=false;
+ pointerMoved=false;
+ pointerIdActive=null;
+ try{canvas.releasePointerCapture(e.pointerId)}catch(_){ }
+
+ // Kalau cuma tap, jatuhkan bola tanpa mengubah posisi terakhirnya.
+ if(running&&currentBall&&!wasMoved){
+  dropCurrentBall();
+ }
+}
+
+canvas.addEventListener('pointerup',endPointer);
+canvas.addEventListener('pointercancel',endPointer);
+
+function dropCurrentBall(){
+ if(!currentBall||!running)return;
+ balls.push({
+  level:currentBall.level,
+  x:currentBall.x,
+  y:currentBall.y,
+  vx:0,
+  vy:0,
+  radius:currentBall.radius,
+  hasEnteredArena:false,
+  sleeping:false,
+  sleepTimer:0,
+  settlePhase:Math.random()*Math.PI*2
+ });
+ gameHasStartedDropping=true;
+ currentBall=null;
+ setTimeout(()=>{if(running)createCurrentBall()},180);
+}
+
+// ================= FISIKA V5 =================
+// Contact solver diperketat agar bola tidak "nempel" di satu garis,
+// tidak saling masuk, dan lebih mudah bergeser/rolling saat ditumpuk.
+const gravity=1750;
+const airDrag=.9997;
+const floorFriction=.97;
+const wallFriction=.995;
+const wallBounce=.34;
+const floorBounce=.22;
+const positionCorrection=.72;
+const maxVelocity=2000;
+const collisionRestitution=.24;
+const collisionFriction=.025;
+const subSteps=8;
+const solverIterations=8;
+
+// Toleransi kontak untuk MERGE.
+// Bola dengan level sama akan langsung bergabung saat sudah sangat dekat,
+// jadi tidak perlu menunggu sampai keduanya saling "menekan" lebih dalam.
+const mergeContactPadding=4.5;
+
+function wakeBall(ball){
+ ball.sleeping=false;
+ ball.sleepTimer=0;
+}
+
+function ballMass(ball){
+ return Math.max(1,ball.radius*ball.radius);
+}
+
+function keepBallInside(ball){
+ const r=ball.radius;
+
+ if(ball.x-r<arenaLeft){
+  ball.x=arenaLeft+r;
+  if(ball.vx<0){
+   ball.vx=-ball.vx*wallBounce;
+   ball.vy*=wallFriction;
+   wakeBall(ball);
+  }
+ }
+
+ if(ball.x+r>arenaRight){
+  ball.x=arenaRight-r;
+  if(ball.vx>0){
+   ball.vx=-ball.vx*wallBounce;
+   ball.vy*=wallFriction;
+   wakeBall(ball);
+  }
+ }
+
+ if(ball.y+r>arenaBottom){
+  ball.y=arenaBottom-r;
+
+  if(ball.vy>0){
+   const impact=ball.vy;
+   ball.vy=impact>48 ? -impact*floorBounce : 0;
+   ball.vx*=floorFriction;
+
+   if(Math.abs(ball.vx)<1.5)ball.vx=0;
+   wakeBall(ball);
+  }
+ }
+}
+
+function applyContactFriction(a,b,nx,ny,normalImpulse){
+ const tx=-ny,ty=nx;
+ const rvx=b.vx-a.vx,rvy=b.vy-a.vy;
+ const tangentSpeed=rvx*tx+rvy*ty;
+
+ const invA=1/ballMass(a);
+ const invB=1/ballMass(b);
+ const invTotal=invA+invB;
+
+ let jt=-tangentSpeed/invTotal;
+ const maxFriction=Math.abs(normalImpulse)*collisionFriction;
+ jt=Math.max(-maxFriction,Math.min(maxFriction,jt));
+
+ a.vx-=jt*invA*tx;
+ a.vy-=jt*invA*ty;
+ b.vx+=jt*invB*tx;
+ b.vy+=jt*invB*ty;
+}
+
+function normalCollision(a,b,nx,ny,dist){
+ const minDist=a.radius+b.radius;
+ const overlap=minDist-dist;
+ if(overlap<=0)return;
+
+ const invA=1/ballMass(a);
+ const invB=1/ballMass(b);
+ const invTotal=invA+invB;
+
+ // Full separation supaya tidak ada overlap yang tertinggal.
+ const correction=Math.max(0,overlap-.02)*positionCorrection;
+ a.x-=nx*correction*(invA/invTotal);
+ a.y-=ny*correction*(invA/invTotal);
+ b.x+=nx*correction*(invB/invTotal);
+ b.y+=ny*correction*(invB/invTotal);
+
+ const rvx=b.vx-a.vx;
+ const rvy=b.vy-a.vy;
+ const velNormal=rvx*nx+rvy*ny;
+
+ if(velNormal>=0){
+  applyContactFriction(a,b,nx,ny,0);
+  return;
+ }
+
+ const impulse=-(1+collisionRestitution)*velNormal/invTotal;
+
+ a.vx-=impulse*invA*nx;
+ a.vy-=impulse*invA*ny;
+ b.vx+=impulse*invB*nx;
+ b.vy+=impulse*invB*ny;
+
+ applyContactFriction(a,b,nx,ny,impulse);
+
+ wakeBall(a);
+ wakeBall(b);
+}
+
+function solveCollision(a,b){
+ const dx=b.x-a.x,dy=b.y-a.y;
+ const dist=Math.hypot(dx,dy);
+
+ if(dist<.0001){
+  if(a.level===b.level&&a.level<10){
+   mergeBalls(a,b);
+   return true;
+  }
+
+  const angle=((a.level+1)*31+(b.level+1)*17)%100/100*Math.PI*2;
+  const nx=Math.cos(angle),ny=Math.sin(angle);
+  normalCollision(a,b,nx,ny,.0001);
+  return false;
+ }
+
+ const minDist=a.radius+b.radius;
+ const nx=dx/dist,ny=dy/dist;
+
+ // MERGE dicek sebelum collision separation.
+ // Jadi dua bola level sama yang baru menyentuh langsung menyatu,
+ // bukan saling dorong lalu bergeser.
+ if(a.level===b.level&&a.level<10 && dist<=minDist+mergeContactPadding){
+  mergeBalls(a,b);
+  return true;
+ }
+
+ if(dist>=minDist)return false;
+
+ normalCollision(a,b,nx,ny,dist);
+ return false;
+}
+
+// Bantuan rolling yang sangat kecil hanya saat bola sudah benar-benar
+// bersentuhan dengan tumpukan. Vy tidak disentuh.
+// Tujuannya memecah tumpukan vertikal yang terkunci sempurna,
+// tetapi tidak membuat bola yang jauh bergerak sendiri.
+const settleRange=3.5;
+const settleStrength=70;
+const settleMaxSpeed=120;
+
+function applySettlingGravity(){
+ if(balls.length<2)return;
+
+ for(let i=0;i<balls.length;i++){
+  const a=balls[i];
+  if(a.sleeping)continue;
+
+  let hasSupport=false;
+  let leftContact=false;
+  let rightContact=false;
+
+  for(let j=0;j<balls.length;j++){
+   if(i===j)continue;
+   const b=balls[j];
+   const dx=b.x-a.x;
+   const dy=b.y-a.y;
+   const dist=Math.hypot(dx,dy);
+   const contactDist=a.radius+b.radius+settleRange;
+
+   if(dist>contactDist)continue;
+
+   // Hanya bola yang berada di bawah/di samping dekat yang memicu rolling.
+   if(dy>0 && Math.abs(dx)<contactDist)hasSupport=true;
+   if(Math.abs(dy)<contactDist){
+    if(dx<0)leftContact=true;
+    if(dx>0)rightContact=true;
+   }
+  }
+
+  if(!hasSupport)continue;
+
+  let dir=0;
+  if(leftContact&&!rightContact)dir=1;
+  else if(rightContact&&!leftContact)dir=-1;
+  else if(!leftContact&&!rightContact)dir=Math.sin(a.settlePhase||0)>=0?1:-1;
+
+  if(dir!==0){
+   a.vx+=dir*settleStrength*(1/60);
+   a.vx=Math.max(-settleMaxSpeed,Math.min(settleMaxSpeed,a.vx));
+   wakeBall(a);
+  }
+ }
+}
+
+function updatePhysics(dt){
+ dt=Math.min(dt,.025);
