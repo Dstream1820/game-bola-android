@@ -56,6 +56,12 @@ const ctx=canvas.getContext('2d');
 const scoreText=document.getElementById('scoreText');
 const ballName=document.getElementById('ballName');
 const gameResult=document.getElementById('gameResult');
+const gameplayMenu=document.getElementById('gameplayMenu');
+const gameplayMenuBtn=document.getElementById('gameplayMenuBtn');
+const gameplayResumeBtn=document.getElementById('gameplayResumeBtn');
+const gameplaySettingsBtn=document.getElementById('gameplaySettingsBtn');
+const gameplayMainMenuBtn=document.getElementById('gameplayMainMenuBtn');
+const gameplayMenuOverlay=document.getElementById('gameplayMenuOverlay');
 const resultTitle=document.getElementById('resultTitle');
 const resultScore=document.getElementById('resultScore');
 const restartBtn=document.getElementById('restartBtn');
@@ -265,6 +271,10 @@ function gameOver(){if(!running)return;running=false;resultTitle.textContent='GA
 function winGame(){if(!running)return;running=false;resultTitle.textContent='MENANG!';resultScore.textContent='Score: '+score;gameResult.classList.add('active')}
 function drawGame(){drawArena();for(const ball of balls)drawBall(ball);if(currentBall)drawBall(currentBall)}
 function gameLoop(timestamp){if(!running)return;if(!lastTime)lastTime=timestamp;const dt=(timestamp-lastTime)/1000;lastTime=timestamp;updatePhysics(dt);checkGameOver();drawGame();animationId=requestAnimationFrame(gameLoop)}
+gameplayMenuBtn.onclick=()=>{if(!running)return;running=false;gameplayMenuOverlay.classList.add('active')};
+gameplayResumeBtn.onclick=()=>{if(gameplayMenuOverlay.classList.contains('active')){gameplayMenuOverlay.classList.remove('active');running=true;lastTime=0;animationId=requestAnimationFrame(gameLoop)}};
+gameplaySettingsBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');settingsOverlay.classList.add('active')};
+gameplayMainMenuBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');gameScreen.classList.remove('active');mainButtons.style.display='flex';balls=[];currentBall=null;running=false};
 startBtn.onclick=startGame;
 function startGame(){mainButtons.style.display='none';gameScreen.classList.add('active');gameResult.classList.remove('active');resizeCanvas();updateArena();balls=[];currentBall=null;score=0;spawnCount=0;running=true;dragging=false;hasMoved=false;gameHasStartedDropping=false;lastTime=0;updateScore();createCurrentBall();cancelAnimationFrame(animationId);animationId=requestAnimationFrame(gameLoop)}
 restartBtn.onclick=()=>{gameResult.classList.remove('active');startGame()};
