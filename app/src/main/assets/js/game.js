@@ -26,14 +26,7 @@ openSettingsBtn.onclick=()=>{settingsFromGameplay=false;mainButtons.style.displa
 function closeSettings(){
  settingsOverlay.classList.remove('active');
  settingsFromGameplay=false;
- if(gameScreen.classList.contains('active')&&!gameResult.classList.contains('active')){
-  running=true;
-  lastTime=0;
-  cancelAnimationFrame(animationId);
-  animationId=requestAnimationFrame(gameLoop);
- }else{
-  mainButtons.style.display='flex';
- }
+ if(!gameScreen.classList.contains('active'))mainButtons.style.display='flex';
 }
 closeSettingsBtn.onclick=closeSettings;
 settingsOverlay.onclick=e=>{if(e.target===settingsOverlay)closeSettings()};
@@ -313,9 +306,9 @@ function drawGame(){drawArena();for(const ball of balls)drawBall(ball);if(curren
 function gameLoop(timestamp){if(!running)return;if(!lastTime)lastTime=timestamp;const dt=(timestamp-lastTime)/1000;lastTime=timestamp;updatePhysics(dt);checkGameOver();drawGame();animationId=requestAnimationFrame(gameLoop)}
 gameplayMenuBtn.onclick=()=>{
  if(!gameScreen.classList.contains('active')||gameResult.classList.contains('active'))return;
- running=false;cancelAnimationFrame(animationId);gameplayMenuOverlay.classList.add('active');
+ gameplayMenuOverlay.classList.add('active');
 };
-gameplayResumeBtn.onclick=()=>{if(gameplayMenuOverlay.classList.contains('active')){gameplayMenuOverlay.classList.remove('active');running=true;lastTime=0;cancelAnimationFrame(animationId);animationId=requestAnimationFrame(gameLoop)}};
+gameplayResumeBtn.onclick=()=>{if(gameplayMenuOverlay.classList.contains('active'))gameplayMenuOverlay.classList.remove('active')};
 gameplaySettingsBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');settingsFromGameplay=true;settingsOverlay.classList.add('active')};
 gameplayMainMenuBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');gameScreen.classList.remove('active');mainButtons.style.display='flex';balls=[];currentBall=null;running=false};
 startBtn.onclick=startGame;
