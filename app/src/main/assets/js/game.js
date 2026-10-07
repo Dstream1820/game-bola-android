@@ -14,7 +14,6 @@ const openSettingsBtn=document.getElementById('openSettingsBtn');
 const closeSettingsBtn=document.getElementById('closeSettingsBtn');
 const startBtn=document.getElementById('startBtn');
 const exitBtn=document.getElementById('exitBtn');
-const exitTitle=document.getElementById('exitTitle');
 const exitMessage=document.getElementById('exitMessage');
 const cancelExitBtn=document.getElementById('cancelExitBtn');
 const confirmExitBtn=document.getElementById('confirmExitBtn');
@@ -40,13 +39,12 @@ startBtn.textContent=t.start;openSettingsBtn.textContent=t.settings;exitBtn.text
 document.getElementById('gameSoundLabel').textContent=t.gameSound;
 document.getElementById('languageLabel').textContent=t.language;
 closeSettingsBtn.textContent=t.close;
-exitTitle.textContent=t.confirmTitle;
 exitMessage.textContent=t.confirmMessage;
 cancelExitBtn.textContent=t.cancel;
 confirmExitBtn.textContent=t.ok;
 };
-function openExitConfirm(){exitOverlay.classList.add('active')}
-function closeExitConfirm(){exitOverlay.classList.remove('active')}
+function openExitConfirm(){mainButtons.style.display='none';exitOverlay.classList.add('active')}
+function closeExitConfirm(){exitOverlay.classList.remove('active');mainButtons.style.display='flex'}
 exitBtn.onclick=openExitConfirm;
 cancelExitBtn.onclick=closeExitConfirm;
 exitOverlay.onclick=e=>{if(e.target===exitOverlay)closeExitConfirm()};
