@@ -159,3 +159,50 @@
     .result-title { font-size: clamp(28px,7vw,55px); font-weight: bold; margin-bottom: 15px; }
     .result-score { font-size: clamp(18px,4vw,30px); margin-bottom: 20px; }
     .result-box button { width: 100%; margin-top: 8px; padding: 12px; border: 0; border-radius: 7px; background: #999; color: #000; font-size: clamp(16px,3vw,25px); }
+
+
+    /* Popup konfirmasi keluar - dibuat mengikuti tampilan popup Pengaturan */
+    .exit-confirm-menu {
+        min-height: auto;
+        padding: calc(55vh * 0.05);
+        text-align: left;
+    }
+
+    .exit-confirm-menu h2 {
+        margin-bottom: calc(55vh * 0.025);
+    }
+
+    .exit-confirm-content {
+        font-size: calc(55vh * 0.035);
+        font-weight: 500;
+        line-height: 1.35;
+        padding-left: calc(55vh * 0.04);
+        padding-right: calc(55vh * 0.02);
+    }
+
+    .exit-confirm-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: calc(55vh * 0.02);
+        margin-top: calc(55vh * 0.05);
+    }
+
+    .exit-confirm-buttons button {
+        min-width: calc(55vh * 0.12);
+        padding: calc(55vh * 0.012) calc(55vh * 0.025);
+        background-color: rgba(128, 138, 142, 0.5);
+        color: #000000;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: calc(55vh * 0.008);
+        font-size: calc(55vh * 0.028);
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .exit-confirm-buttons button:hover {
+        background-color: rgba(128, 138, 142, 0.7);
+    }
+
+    .exit-confirm-buttons button:active {
+        transform: scale(0.98);
+    }
