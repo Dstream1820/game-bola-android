@@ -168,9 +168,9 @@ function dropCurrentBall(){
  setTimeout(()=>{if(running)createCurrentBall()},180);
 }
 
-const gravity=1750,airDrag=.9997,floorFriction=.97,wallFriction=.995,wallBounce=.34,floorBounce=.22,positionCorrection=.72,maxVelocity=2000,collisionRestitution=.24,collisionFriction=.025,subSteps=8,solverIterations=8,mergeContactPadding=4.5;
+const gravity=1750,airDrag=.9997,floorFriction=.985,wallFriction=.998,wallBounce=.45,floorBounce=.34,positionCorrection=.78,maxVelocity=2400,collisionRestitution=.52,collisionFriction=.012,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
 function wakeBall(ball){ball.sleeping=false;ball.sleepTimer=0}
-function ballMass(ball){return Math.max(1,ball.radius*ball.radius)}
+function ballMass(ball){return Math.max(1,ball.radius*ball.radius*0.42)}
 function keepBallInside(ball){
  const r=ball.radius;
  if(ball.x-r<arenaLeft){ball.x=arenaLeft+r;if(ball.vx<0){ball.vx=-ball.vx*wallBounce;ball.vy*=wallFriction;wakeBall(ball)}}
@@ -206,7 +206,7 @@ function solveCollision(a,b){
  if(dist>=minDist)return false;
  normalCollision(a,b,nx,ny,dist);return false;
 }
-const settleRange=3.5,settleStrength=70,settleMaxSpeed=120;
+const settleRange=3.5,settleStrength=260,settleMaxSpeed=220;
 function applySettlingGravity(){
  if(balls.length<2)return;
  for(let i=0;i<balls.length;i++){
