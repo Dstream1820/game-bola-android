@@ -167,7 +167,7 @@ function dropCurrentBall(){
  setTimeout(()=>{if(running)createCurrentBall()},180);
 }
 
-const gravity=2250,airDrag=.9975,floorFriction=.995,wallFriction=.997,wallBounce=.32,floorBounce=.24,positionCorrection=.82,maxVelocity=3200,collisionRestitution=.38,collisionFriction=.003,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
+const gravity=1850,airDrag=.9968,floorFriction=.997,wallFriction=.998,wallBounce=.30,floorBounce=.22,positionCorrection=.82,maxVelocity=3400,collisionRestitution=.34,collisionFriction=.002,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
 function wakeBall(ball){ball.sleeping=false;ball.sleepTimer=0}
 function ballMass(ball){return Math.max(1,ball.radius*ball.radius*0.42)}
 function keepBallInside(ball){
