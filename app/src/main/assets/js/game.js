@@ -25,12 +25,15 @@ let settingsFromGameplay=false;
 openSettingsBtn.onclick=()=>{settingsFromGameplay=false;mainButtons.style.display='none';settingsOverlay.classList.add('active')};
 function closeSettings(){
  settingsOverlay.classList.remove('active');
- if(settingsFromGameplay){
-  settingsFromGameplay=false;
-  if(gameScreen.classList.contains('active')&&!gameResult.classList.contains('active')){
-   running=true;lastTime=0;cancelAnimationFrame(animationId);animationId=requestAnimationFrame(gameLoop);
-  }
- }else{mainButtons.style.display='flex'}
+ settingsFromGameplay=false;
+ if(gameScreen.classList.contains('active')&&!gameResult.classList.contains('active')){
+  running=true;
+  lastTime=0;
+  cancelAnimationFrame(animationId);
+  animationId=requestAnimationFrame(gameLoop);
+ }else{
+  mainButtons.style.display='flex';
+ }
 }
 closeSettingsBtn.onclick=closeSettings;
 settingsOverlay.onclick=e=>{if(e.target===settingsOverlay)closeSettings()};
