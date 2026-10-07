@@ -54,7 +54,7 @@ const gameScreen=document.getElementById('gameScreen');
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
 const scoreText=document.getElementById('scoreText');
-const ballName=document.getElementById('ballName');
+
 const gameResult=document.getElementById('gameResult');
 const gameplayMenu=document.getElementById('gameplayMenu');
 const gameplayMenuBtn=document.getElementById('gameplayMenuBtn');
@@ -117,7 +117,7 @@ level=Math.floor(Math.random()*(maxLevel+1));
 spawnCount++;
 const data=levels[level];
 currentBall={level,x:(arenaLeft+arenaRight)/2,y:dangerY-70,radius:data.radius};
-ballName.textContent=data.name;
+
 }
 
 function drawBall(ball){
