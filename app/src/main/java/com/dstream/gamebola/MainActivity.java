@@ -2,6 +2,7 @@ package com.dstream.gamebola;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -10,6 +11,13 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity {
     private WebView webView;
+
+    public class AndroidBridge {
+        @JavascriptInterface
+        public void exitApp() {
+            runOnUiThread(() -> finishAffinity());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,7 @@ public class MainActivity extends Activity {
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
         webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+        webView.addJavascriptInterface(new AndroidBridge(), "Android");
         setContentView(webView);
         webView.loadUrl("file:///android_asset/index.html");
     }
