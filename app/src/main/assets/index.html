@@ -14,6 +14,11 @@
 <div class="setting-row"><div class="setting-label" id="languageLabel">• Language</div><div class="setting-control"><select id="languageSelect"><option value="id">Indonesia</option><option value="en">English</option></select></div></div>
 </div><button class="btn-invisible-close" id="closeSettingsBtn">[Tutup]</button>
 </div></div>
+<div class="modal-overlay" id="exitModal"><div class="settings-menu exit-confirm-menu">
+<h2 id="exitTitle">Konfirmasi</h2>
+<div class="exit-confirm-content" id="exitMessage">Yakin mau keluar?</div>
+<div class="exit-confirm-buttons"><button id="cancelExitBtn">BATAL</button><button id="confirmExitBtn">OKE</button></div>
+</div></div>
 <div class="game-screen" id="gameScreen"><canvas id="gameCanvas"></canvas>
 <div class="game-hud"><div class="hud-box">Score: <span id="scoreText">0</span></div><div class="hud-box"><span id="ballName">Mini</span></div></div>
 <div class="game-result" id="gameResult"><div class="result-box"><div class="result-title" id="resultTitle">GAME OVER</div><div class="result-score" id="resultScore">Score: 0</div><button id="restartBtn">Main Lagi</button><button id="menuBtn">Menu Utama</button></div></div>
