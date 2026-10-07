@@ -256,3 +256,4 @@ function startGame(){mainButtons.style.display='none';gameScreen.classList.add('
 restartBtn.onclick=()=>{gameResult.classList.remove('active');startGame()};
 menuBtn.onclick=()=>{running=false;cancelAnimationFrame(animationId);gameResult.classList.remove('active');gameScreen.classList.remove('active');mainButtons.style.display='flex'};
 window.addEventListener('resize',()=>{if(gameScreen.classList.contains('active')){resizeCanvas();updateArena();for(const ball of balls)keepBallInside(ball)}});
+// Exit confirmation enabled.
