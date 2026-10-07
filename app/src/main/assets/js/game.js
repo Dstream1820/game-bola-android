@@ -75,7 +75,8 @@ const levels=[
 {name:'Raksasa',radius:57,color:'#2196F3'},
 {name:'Super',radius:70,color:'#00BCD4'},
 {name:'Mega',radius:85,color:'#4CAF50'},
-{name:'Ultra',radius:102,color:'#CDDC39'}
+{name:'Ultra',radius:102,color:'#CDDC39'},
+{name:'Titan',radius:122,color:'#B8860B'}
 ];
 
 let balls=[],currentBall=null,score=0,running=false,dragging=false,hasMoved=false,pointerDownX=0,animationId=null,spawnCount=0,gameHasStartedDropping=false,lastTime=0;
@@ -195,12 +196,12 @@ function normalCollision(a,b,nx,ny,dist){
 function solveCollision(a,b){
  const dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy);
  if(dist<.0001){
-  if(a.level===b.level&&a.level<8){mergeBalls(a,b);return true}
+  if(a.level===b.level&&a.level<9){mergeBalls(a,b);return true}
   const angle=((a.level+1)*31+(b.level+1)*17)%100/100*Math.PI*2;
   normalCollision(a,b,Math.cos(angle),Math.sin(angle),.0001);return false;
  }
  const minDist=a.radius+b.radius,nx=dx/dist,ny=dy/dist;
- if(a.level===b.level&&a.level<8&&dist<=minDist+mergeContactPadding){mergeBalls(a,b);return true}
+ if(a.level===b.level&&a.level<9&&dist<=minDist+mergeContactPadding){mergeBalls(a,b);return true}
  if(dist>=minDist)return false;
  normalCollision(a,b,nx,ny,dist);return false;
 }
@@ -248,8 +249,8 @@ function mergeBalls(a,b){
  const ia=balls.indexOf(a),ib=balls.indexOf(b);if(ia===-1||ib===-1)return;
  const newLevel=a.level+1,newX=(a.x+b.x)/2,newY=(a.y+b.y)/2,newVx=(a.vx+b.vx)/2,newVy=(a.vy+b.vy)/2;
  balls.splice(Math.max(ia,ib),1);balls.splice(Math.min(ia,ib),1);
- if(newLevel>=8){
-  const radius=levels[8].radius,finalBall={level:8,x:newX,y:newY,vx:newVx*.42,vy:Math.min(newVy*.14,-205),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2};
+ if(newLevel>=9){
+  const radius=levels[9].radius,finalBall={level:9,x:newX,y:newY,vx:newVx*.42,vy:Math.min(newVy*.14,-205),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2};
   finalBall.x=Math.max(arenaLeft+radius,Math.min(arenaRight-radius,finalBall.x));finalBall.y=Math.min(arenaBottom-radius,finalBall.y);balls.push(finalBall);score+=1000;updateScore();setTimeout(winGame,600);return;
  }
  const radius=levels[newLevel].radius,mergedBall={level:newLevel,x:newX,y:newY,vx:newVx*.42,vy:Math.min(newVy*.14,-120),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2};
