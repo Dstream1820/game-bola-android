@@ -162,12 +162,12 @@ canvas.addEventListener('pointercancel',endPointer);
 
 function dropCurrentBall(){
  if(!currentBall||!running)return;
- balls.push({level:currentBall.level,x:currentBall.x,y:currentBall.y,vx:0,vy:0,radius:currentBall.radius,hasEnteredArena:false,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2});
+ balls.push({level:currentBall.level,x:currentBall.x,y:currentBall.y,vx:0,vy:25,radius:currentBall.radius,hasEnteredArena:false,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2});
  gameHasStartedDropping=true;currentBall=null;
  setTimeout(()=>{if(running)createCurrentBall()},180);
 }
 
-const gravity=1750,airDrag=.9997,floorFriction=.985,wallFriction=.998,wallBounce=.45,floorBounce=.34,positionCorrection=.78,maxVelocity=2400,collisionRestitution=.52,collisionFriction=.012,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
+const gravity=2050,airDrag=.9988,floorFriction=.992,wallFriction=.995,wallBounce=.52,floorBounce=.42,positionCorrection=.82,maxVelocity=2800,collisionRestitution=.58,collisionFriction=.006,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
 function wakeBall(ball){ball.sleeping=false;ball.sleepTimer=0}
 function ballMass(ball){return Math.max(1,ball.radius*ball.radius*0.42)}
 function keepBallInside(ball){
