@@ -36,7 +36,7 @@ document.getElementById('gameSoundLabel').textContent=t.gameSound;
 document.getElementById('languageLabel').textContent=t.language;
 closeSettingsBtn.textContent=t.close;
 };
-exitBtn.onclick=()=>alert(languageSelect.value==='en'?'Exit button pressed!':'Tombol Keluar ditekan!');
+exitBtn.onclick=()=>{if(window.Android&&typeof window.Android.exitApp==='function'){window.Android.exitApp()}else{window.close()}};
 
 const gameScreen=document.getElementById('gameScreen');
 const canvas=document.getElementById('gameCanvas');
