@@ -19,7 +19,7 @@
 <div class="exit-confirm-buttons"><button id="cancelExitBtn">BATAL</button><button id="confirmExitBtn">OKE</button></div>
 </div></div>
 <div class="game-screen" id="gameScreen"><canvas id="gameCanvas"></canvas>
-<div class="game-hud"><div class="hud-box">Score: <span id="scoreText">0</span></div><div class="hud-box"><span id="ballName">Mini</span></div></div>
-<div class="game-result" id="gameResult"><div class="result-box"><div class="result-title" id="resultTitle">GAME OVER</div><div class="result-score" id="resultScore">Score: 0</div><button id="restartBtn">Main Lagi</button><button id="menuBtn">Menu Utama</button></div></div>
+<button class="game-menu-button" id="gameplayMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button><div class="game-hud"><div class="hud-box">Score: <span id="scoreText">0</span></div><div class="hud-box"><span id="ballName">Mini</span></div></div>
+<div class="modal-overlay gameplay-menu-overlay" id="gameplayMenuOverlay"><div class="gameplay-menu"><h2>MENU</h2><button id="gameplayResumeBtn">Lanjut</button><button id="gameplaySettingsBtn">Pengaturan</button><button id="gameplayMainMenuBtn">Kembali ke Menu Utama</button></div></div><div class="game-result" id="gameResult"><div class="result-box"><div class="result-title" id="resultTitle">GAME OVER</div><div class="result-score" id="resultScore">Score: 0</div><button id="restartBtn">Main Lagi</button><button id="menuBtn">Menu Utama</button></div></div>
 </div></div>
 <script src="js/game.js"></script></body></html>
