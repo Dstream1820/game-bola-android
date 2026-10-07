@@ -202,3 +202,16 @@
     .exit-confirm-buttons button:active {
         transform: scale(0.98);
     }
+
+
+/* Gameplay menu */
+.game-menu-button{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:20;width:58px;height:38px;padding:7px 12px;border:1px solid rgba(0,0,0,.45);border-radius:16px;background:rgba(70,78,82,.72);display:flex;flex-direction:column;justify-content:center;gap:4px;box-shadow:0 3px 10px rgba(0,0,0,.28);cursor:pointer;touch-action:manipulation}
+.game-menu-button::before,.game-menu-button::after{content:'';position:absolute;width:5px;height:5px;border:1px solid rgba(255,255,255,.55)}
+.game-menu-button::before{left:5px;top:5px;border-right:0;border-bottom:0;border-radius:3px 0 0 0}.game-menu-button::after{right:5px;bottom:5px;border-left:0;border-top:0;border-radius:0 0 3px 0}
+.game-menu-button span{display:block;height:2px;border-radius:2px;background:#eee;box-shadow:0 0 4px rgba(255,255,255,.35)}
+.game-menu-button:active{transform:translateX(-50%) scale(.95)}
+.gameplay-menu-overlay{z-index:40;background:rgba(0,0,0,.35)}
+.gameplay-menu{width:78%;padding:24px 20px 20px;background:rgba(128,138,142,.88);border:1px solid rgba(0,0,0,.35);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center;color:#111}
+.gameplay-menu h2{margin-bottom:18px;font-size:clamp(22px,5vw,36px);font-weight:600}
+.gameplay-menu button{display:block;width:100%;margin:9px 0;padding:12px 10px;border:1px solid rgba(0,0,0,.22);border-radius:14px;background:rgba(205,210,212,.55);color:#111;font-size:clamp(15px,3.5vw,23px);font-weight:600}
+.gameplay-menu button:active{transform:scale(.98)}
