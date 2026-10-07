@@ -116,7 +116,9 @@ ballName.textContent=data.name;
 
 function drawBall(ball){
 const data=levels[ball.level];
-ctx.beginPath();ctx.arc(ball.x,ball.y,ball.radius,0,Math.PI*2);
+const pulse=ball.mergePulse||0;
+const drawRadius=ball.radius*(1+0.10*pulse);
+ctx.beginPath();ctx.arc(ball.x,ball.y,drawRadius,0,Math.PI*2);
 ctx.fillStyle=data.color;ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=2;ctx.stroke();
 }
 
@@ -167,7 +169,7 @@ function dropCurrentBall(){
  setTimeout(()=>{if(running)createCurrentBall()},180);
 }
 
-const gravity=1850,airDrag=.9968,floorFriction=.997,wallFriction=.998,wallBounce=.30,floorBounce=.22,positionCorrection=.82,maxVelocity=3400,collisionRestitution=.34,collisionFriction=.002,subSteps=8,solverIterations=8,mergeContactPadding=5.5;
+const gravity=1850,airDrag=.9968,floorFriction=.997,wallFriction=.998,wallBounce=.30,floorBounce=.22,positionCorrection=.82,maxVelocity=3400,collisionRestitution=.34,collisionFriction=.002,subSteps=8,solverIterations=8,mergeContactPadding=2.2;
 function wakeBall(ball){ball.sleeping=false;ball.sleepTimer=0}
 function ballMass(ball){return Math.max(1,ball.radius*ball.radius*0.42)}
 function keepBallInside(ball){
@@ -223,7 +225,8 @@ function applySettlingGravity(){
  }
 }
 function updatePhysics(dt){
- dt=Math.min(dt,.025);const stepDt=dt/subSteps;
+ dt=Math.min(dt,.025);
+ for(const ball of balls)if(ball.mergePulse>0)ball.mergePulse=Math.max(0,ball.mergePulse-dt/0.14);const stepDt=dt/subSteps;
  for(let step=0;step<subSteps;step++){
   for(const ball of balls){
    if(ball.sleeping){if(Math.abs(ball.vx)>2.5||Math.abs(ball.vy)>2.5)wakeBall(ball);else continue}
@@ -250,10 +253,10 @@ function mergeBalls(a,b){
  const newLevel=a.level+1,newX=(a.x+b.x)/2,newY=(a.y+b.y)/2,newVx=(a.vx+b.vx)/2,newVy=(a.vy+b.vy)/2;
  balls.splice(Math.max(ia,ib),1);balls.splice(Math.min(ia,ib),1);
  if(newLevel>=9){
-  const radius=levels[9].radius,finalBall={level:9,x:newX,y:newY,vx:newVx*.42,vy:Math.min(newVy*.14,-205),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2};
+  const radius=levels[9].radius,finalBall={level:9,x:newX,y:newY,vx:newVx*.55,vy:Math.min(newVy*.18,-170),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2,mergePulse:1};
   finalBall.x=Math.max(arenaLeft+radius,Math.min(arenaRight-radius,finalBall.x));finalBall.y=Math.min(arenaBottom-radius,finalBall.y);balls.push(finalBall);score+=1000;updateScore();setTimeout(winGame,600);return;
  }
- const radius=levels[newLevel].radius,mergedBall={level:newLevel,x:newX,y:newY,vx:newVx*.42,vy:Math.min(newVy*.14,-120),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2};
+ const radius=levels[newLevel].radius,mergedBall={level:newLevel,x:newX,y:newY,vx:newVx*.55,vy:Math.min(newVy*.18,-105),radius,hasEnteredArena:true,sleeping:false,sleepTimer:0,settlePhase:Math.random()*Math.PI*2,mergePulse:1};
  mergedBall.x=Math.max(arenaLeft+radius,Math.min(arenaRight-radius,mergedBall.x));mergedBall.y=Math.min(arenaBottom-radius,mergedBall.y);balls.push(mergedBall);score+=(newLevel+1)*20;updateScore();
 }
 function updateScore(){scoreText.textContent=score}
