@@ -41,20 +41,48 @@ gameSoundSlider.oninput=()=>gameSoundVolume=Number(gameSoundSlider.value)/100;
 bgmSlider.oninput=()=>bgm.volume=Number(bgmSlider.value)/100;
 
 const translations={
-id:{title:'Pengaturan',start:'Mulai',settings:'Pengaturan',exit:'Keluar',gameSound:'• Suara Game',language:'• Language',close:'[Tutup]',confirmTitle:'Konfirmasi',confirmMessage:'Yakin mau keluar?',cancel:'BATAL',ok:'OKE'},
-en:{title:'Settings',start:'Start',settings:'Settings',exit:'Exit',gameSound:'• Game Sound',language:'• Language',close:'[Close]',confirmTitle:'Confirmation',confirmMessage:'Are you sure you want to exit?',cancel:'CANCEL',ok:'OK'}
+id:{
+ title:'Pengaturan',start:'Mulai',settings:'Pengaturan',exit:'Keluar',
+ gameSound:'• Suara Game',bgm:'• BGM',language:'• Language',close:'[Tutup]',
+ confirmMessage:'Yakin mau keluar?',cancel:'BATAL',ok:'OKE',
+ score:'Score',menu:'MENU',resume:'Lanjut',gameplaySettings:'Pengaturan',
+ mainMenu:'Kembali ke Menu Utama',gameOver:'GAME OVER',win:'MENANG!',
+ playAgain:'Main Lagi',mainMenuBtn:'Menu Utama'
+},
+en:{
+ title:'Settings',start:'Start',settings:'Settings',exit:'Exit',
+ gameSound:'• Game Sound',bgm:'• BGM',language:'• Language',close:'[Close]',
+ confirmMessage:'Are you sure you want to exit?',cancel:'CANCEL',ok:'OK',
+ score:'Score',menu:'MENU',resume:'Resume',gameplaySettings:'Settings',
+ mainMenu:'Back to Main Menu',gameOver:'GAME OVER',win:'YOU WIN!',
+ playAgain:'Play Again',mainMenuBtn:'Main Menu'
+}
 };
-languageSelect.onchange=()=>{
-const t=translations[languageSelect.value];
-document.getElementById('settingsTitle').textContent=t.title;
-startBtn.textContent=t.start;openSettingsBtn.textContent=t.settings;exitBtn.textContent=t.exit;
-document.getElementById('gameSoundLabel').textContent=t.gameSound;
-document.getElementById('languageLabel').textContent=t.language;
-closeSettingsBtn.textContent=t.close;
-exitMessage.textContent=t.confirmMessage;
-cancelExitBtn.textContent=t.cancel;
-confirmExitBtn.textContent=t.ok;
-};
+function applyLanguage(){
+ const t=translations[languageSelect.value];
+ document.documentElement.lang=languageSelect.value;
+ document.getElementById('settingsTitle').textContent=t.title;
+ startBtn.textContent=t.start;
+ openSettingsBtn.textContent=t.settings;
+ exitBtn.textContent=t.exit;
+ document.getElementById('gameSoundLabel').textContent=t.gameSound;
+ document.getElementById('bgmLabel').textContent=t.bgm;
+ document.getElementById('languageLabel').textContent=t.language;
+ closeSettingsBtn.textContent=t.close;
+ exitMessage.textContent=t.confirmMessage;
+ cancelExitBtn.textContent=t.cancel;
+ confirmExitBtn.textContent=t.ok;
+ document.getElementById('scoreLabel').textContent=t.score;
+ document.getElementById('gameplayMenuTitle').textContent=t.menu;
+ gameplayResumeBtn.textContent=t.resume;
+ gameplaySettingsBtn.textContent=t.gameplaySettings;
+ gameplayMainMenuBtn.textContent=t.mainMenu;
+ resultTitle.textContent=gameResult.classList.contains('active')&&resultTitle.textContent===translations.id.win? t.win : resultTitle.textContent==='MENANG!'||resultTitle.textContent==='YOU WIN!' ? t.win : t.gameOver;
+ restartBtn.textContent=t.playAgain;
+ menuBtn.textContent=t.mainMenuBtn;
+ if(gameResult.classList.contains('active')) resultScore.textContent=t.score+': '+score;
+}
+languageSelect.onchange=applyLanguage;
 function openExitConfirm(){mainButtons.style.display='none';exitOverlay.classList.add('active')}
 function closeExitConfirm(){exitOverlay.classList.remove('active');mainButtons.style.display='flex'}
 exitBtn.onclick=openExitConfirm;
@@ -279,8 +307,8 @@ function mergeBalls(a,b){
 }
 function updateScore(){scoreText.textContent=score}
 function checkGameOver(){if(!gameHasStartedDropping)return;for(const ball of balls)if(ball.hasEnteredArena&&ball.y-ball.radius<=dangerY&&Math.abs(ball.vy)<12&&Math.abs(ball.vx)<12){gameOver();return}}
-function gameOver(){if(!running)return;running=false;resultTitle.textContent='GAME OVER';resultScore.textContent='Score: '+score;gameResult.classList.add('active')}
-function winGame(){if(!running)return;running=false;resultTitle.textContent='MENANG!';resultScore.textContent='Score: '+score;gameResult.classList.add('active')}
+function gameOver(){if(!running)return;running=false;const t=translations[languageSelect.value];resultTitle.textContent=t.gameOver;resultScore.textContent=t.score+': '+score;gameResult.classList.add('active')}
+function winGame(){if(!running)return;running=false;const t=translations[languageSelect.value];resultTitle.textContent=t.win;resultScore.textContent=t.score+': '+score;gameResult.classList.add('active')}
 function drawGame(){drawArena();for(const ball of balls)drawBall(ball);if(currentBall)drawBall(currentBall)}
 function gameLoop(timestamp){if(!running)return;if(!lastTime)lastTime=timestamp;const dt=(timestamp-lastTime)/1000;lastTime=timestamp;updatePhysics(dt);checkGameOver();drawGame();animationId=requestAnimationFrame(gameLoop)}
 gameplayMenuBtn.onclick=()=>{
