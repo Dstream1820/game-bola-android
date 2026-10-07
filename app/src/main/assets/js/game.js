@@ -304,12 +304,24 @@ function gameOver(){if(!running)return;running=false;const t=translations[langua
 function winGame(){if(!running)return;running=false;const t=translations[languageSelect.value];resultTitle.textContent=t.win;resultScore.textContent=t.score+': '+score;gameResult.classList.add('active')}
 function drawGame(){drawArena();for(const ball of balls)drawBall(ball);if(currentBall)drawBall(currentBall)}
 function gameLoop(timestamp){if(!running)return;if(!lastTime)lastTime=timestamp;const dt=(timestamp-lastTime)/1000;lastTime=timestamp;updatePhysics(dt);checkGameOver();drawGame();animationId=requestAnimationFrame(gameLoop)}
+function keepGameplayRunning(){
+ running=true;
+ lastTime=0;
+ cancelAnimationFrame(animationId);
+ animationId=requestAnimationFrame(gameLoop);
+}
 gameplayMenuBtn.onclick=()=>{
  if(!gameScreen.classList.contains('active')||gameResult.classList.contains('active'))return;
  gameplayMenuOverlay.classList.add('active');
+ keepGameplayRunning();
 };
 gameplayResumeBtn.onclick=()=>{if(gameplayMenuOverlay.classList.contains('active'))gameplayMenuOverlay.classList.remove('active')};
-gameplaySettingsBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');settingsFromGameplay=true;settingsOverlay.classList.add('active')};
+gameplaySettingsBtn.onclick=()=>{
+ gameplayMenuOverlay.classList.remove('active');
+ settingsFromGameplay=true;
+ settingsOverlay.classList.add('active');
+ keepGameplayRunning();
+};
 gameplayMainMenuBtn.onclick=()=>{gameplayMenuOverlay.classList.remove('active');gameScreen.classList.remove('active');mainButtons.style.display='flex';balls=[];currentBall=null;running=false};
 startBtn.onclick=startGame;
 function startGame(){mainButtons.style.display='none';gameScreen.classList.add('active');gameResult.classList.remove('active');resizeCanvas();updateArena();balls=[];currentBall=null;score=0;spawnCount=0;running=true;dragging=false;hasMoved=false;gameHasStartedDropping=false;lastTime=0;updateScore();createCurrentBall();cancelAnimationFrame(animationId);animationId=requestAnimationFrame(gameLoop)}
