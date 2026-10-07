@@ -9,10 +9,15 @@ document.addEventListener('visibilitychange',()=>document.hidden?bgm.pause():sta
 
 const mainButtons=document.querySelector('.main-buttons');
 const settingsOverlay=document.getElementById('settingsModal');
+const exitOverlay=document.getElementById('exitModal');
 const openSettingsBtn=document.getElementById('openSettingsBtn');
 const closeSettingsBtn=document.getElementById('closeSettingsBtn');
 const startBtn=document.getElementById('startBtn');
 const exitBtn=document.getElementById('exitBtn');
+const exitTitle=document.getElementById('exitTitle');
+const exitMessage=document.getElementById('exitMessage');
+const cancelExitBtn=document.getElementById('cancelExitBtn');
+const confirmExitBtn=document.getElementById('confirmExitBtn');
 const gameSoundSlider=document.getElementById('gameSoundSlider');
 const bgmSlider=document.getElementById('bgmSlider');
 const languageSelect=document.getElementById('languageSelect');
@@ -25,8 +30,8 @@ gameSoundSlider.oninput=()=>gameSoundVolume=Number(gameSoundSlider.value)/100;
 bgmSlider.oninput=()=>bgm.volume=Number(bgmSlider.value)/100;
 
 const translations={
-id:{title:'Pengaturan',start:'Mulai',settings:'Pengaturan',exit:'Keluar',gameSound:'• Suara Game',language:'• Language',close:'[Tutup]'},
-en:{title:'Settings',start:'Start',settings:'Settings',exit:'Exit',gameSound:'• Game Sound',language:'• Language',close:'[Close]'}
+id:{title:'Pengaturan',start:'Mulai',settings:'Pengaturan',exit:'Keluar',gameSound:'• Suara Game',language:'• Language',close:'[Tutup]',confirmTitle:'Konfirmasi',confirmMessage:'Yakin mau keluar?',cancel:'BATAL',ok:'OKE'},
+en:{title:'Settings',start:'Start',settings:'Settings',exit:'Exit',gameSound:'• Game Sound',language:'• Language',close:'[Close]',confirmTitle:'Confirmation',confirmMessage:'Are you sure you want to exit?',cancel:'CANCEL',ok:'OK'}
 };
 languageSelect.onchange=()=>{
 const t=translations[languageSelect.value];
@@ -35,8 +40,17 @@ startBtn.textContent=t.start;openSettingsBtn.textContent=t.settings;exitBtn.text
 document.getElementById('gameSoundLabel').textContent=t.gameSound;
 document.getElementById('languageLabel').textContent=t.language;
 closeSettingsBtn.textContent=t.close;
+exitTitle.textContent=t.confirmTitle;
+exitMessage.textContent=t.confirmMessage;
+cancelExitBtn.textContent=t.cancel;
+confirmExitBtn.textContent=t.ok;
 };
-exitBtn.onclick=()=>{const message=languageSelect.value==='en'?'Are you sure you want to exit?':'Yakin mau keluar?';if(confirm(message)){if(window.Android&&typeof window.Android.exitApp==='function'){window.Android.exitApp()}else{window.close()}}};
+function openExitConfirm(){exitOverlay.classList.add('active')}
+function closeExitConfirm(){exitOverlay.classList.remove('active')}
+exitBtn.onclick=openExitConfirm;
+cancelExitBtn.onclick=closeExitConfirm;
+exitOverlay.onclick=e=>{if(e.target===exitOverlay)closeExitConfirm()};
+confirmExitBtn.onclick=()=>{if(window.Android&&typeof window.Android.exitApp==='function'){window.Android.exitApp()}else{window.close()}};
 
 const gameScreen=document.getElementById('gameScreen');
 const canvas=document.getElementById('gameCanvas');
