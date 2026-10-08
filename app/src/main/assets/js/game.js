@@ -329,3 +329,30 @@ restartBtn.onclick=()=>{gameResult.classList.remove('active');startGame()};
 menuBtn.onclick=()=>{running=false;cancelAnimationFrame(animationId);gameResult.classList.remove('active');gameScreen.classList.remove('active');mainButtons.style.display='flex'};
 window.addEventListener('resize',()=>{if(gameScreen.classList.contains('active')){resizeCanvas();updateArena();for(const ball of balls)keepBallInside(ball)}});
 // Exit confirmation enabled.
+
+
+// Android Back button handler.
+// Menu utama -> jalankan fungsi Keluar (konfirmasi).
+// Gameplay -> buka menu gameplay tanpa menghentikan game loop.
+function handleAndroidBack(){
+ if(exitOverlay.classList.contains('active')){
+  closeExitConfirm();
+  return;
+ }
+ if(settingsOverlay.classList.contains('active')){
+  closeSettings();
+  return;
+ }
+ if(gameplayMenuOverlay.classList.contains('active')){
+  gameplayMenuOverlay.classList.remove('active');
+  keepGameplayRunning();
+  return;
+ }
+ if(gameScreen.classList.contains('active')){
+  if(gameResult.classList.contains('active')) return;
+  gameplayMenuOverlay.classList.add('active');
+  keepGameplayRunning();
+  return;
+ }
+ openExitConfirm();
+}
