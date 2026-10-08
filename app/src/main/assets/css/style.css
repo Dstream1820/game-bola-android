@@ -31,8 +31,13 @@
         font-family: sans-serif;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-        /* Background 100% dari CSS — tanpa pola titik */
-        background: linear-gradient(180deg, #20344d 0%, #142238 42%, #0d1727 100%);
+        /* Background CSS — tanpa pola titik, dengan aksen geometris halus */
+        background:
+            radial-gradient(circle at 8% 30%, transparent 0 42px, rgba(92, 146, 204, .10) 43px 45px, transparent 46px),
+            radial-gradient(circle at 94% 18%, transparent 0 52px, rgba(92, 146, 204, .08) 53px 55px, transparent 56px),
+            linear-gradient(135deg, transparent 0 10%, rgba(72, 113, 155, .10) 10.2% 14%, transparent 14.2%),
+            linear-gradient(315deg, transparent 0 84%, rgba(72, 113, 155, .08) 84.2% 88%, transparent 88.2%),
+            linear-gradient(180deg, #20344d 0%, #142238 42%, #0d1727 100%);
         position: relative;
     }
 
