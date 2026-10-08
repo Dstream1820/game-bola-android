@@ -31,33 +31,9 @@
         font-family: sans-serif;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-        /* Background 100% dari CSS — tidak memakai PNG/JPG */
-        background-color: #101a2b;
-        background-image:
-            radial-gradient(circle at 50% 12%, rgba(92, 146, 204, .24) 0, rgba(92, 146, 204, 0) 27%),
-            radial-gradient(circle at 12% 38%, rgba(62, 104, 153, .14) 0, rgba(62, 104, 153, 0) 22%),
-            radial-gradient(circle at 88% 72%, rgba(41, 116, 176, .12) 0, rgba(41, 116, 176, 0) 24%),
-            linear-gradient(145deg, rgba(72, 113, 155, .15), transparent 19%),
-            linear-gradient(325deg, rgba(72, 113, 155, .12), transparent 20%),
-            linear-gradient(180deg, #20344d 0%, #142238 42%, #0d1727 100%);
-    }
-
-    .canvas-9-16::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background:
-            radial-gradient(circle at 5% 28%, transparent 0 34px, rgba(116, 159, 198, .10) 35px 37px, transparent 38px),
-            radial-gradient(circle at 96% 19%, transparent 0 45px, rgba(116, 159, 198, .08) 46px 48px, transparent 49px),
-            linear-gradient(135deg, transparent 0 7%, rgba(103, 149, 193, .08) 7.1% 9%, transparent 9.1% 100%),
-            linear-gradient(315deg, transparent 0 88%, rgba(103, 149, 193, .07) 88.1% 90%, transparent 90.1% 100%);
-        z-index: 0;
-    }
-
-    .canvas-9-16 > * {
+        /* Background 100% dari CSS — tanpa pola titik */
+        background: linear-gradient(180deg, #20344d 0%, #142238 42%, #0d1727 100%);
         position: relative;
-        z-index: 1;
     }
 
     .main-buttons {
