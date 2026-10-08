@@ -37,13 +37,9 @@
             radial-gradient(circle at 50% 12%, rgba(92, 146, 204, .24) 0, rgba(92, 146, 204, 0) 27%),
             radial-gradient(circle at 12% 38%, rgba(62, 104, 153, .14) 0, rgba(62, 104, 153, 0) 22%),
             radial-gradient(circle at 88% 72%, rgba(41, 116, 176, .12) 0, rgba(41, 116, 176, 0) 24%),
-            radial-gradient(circle at 12% 9%, rgba(108, 160, 214, .16) 0 2px, transparent 2.5px),
-            radial-gradient(circle at 88% 14%, rgba(108, 160, 214, .13) 0 2px, transparent 2.5px),
-            radial-gradient(circle at 9% 87%, rgba(108, 160, 214, .10) 0 2px, transparent 2.5px),
             linear-gradient(145deg, rgba(72, 113, 155, .15), transparent 19%),
             linear-gradient(325deg, rgba(72, 113, 155, .12), transparent 20%),
             linear-gradient(180deg, #20344d 0%, #142238 42%, #0d1727 100%);
-        background-size: auto, auto, auto, 18px 18px, 20px 20px, 18px 18px, auto, auto, auto;
     }
 
     .canvas-9-16::before {
