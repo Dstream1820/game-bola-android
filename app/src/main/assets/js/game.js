@@ -128,7 +128,8 @@ arenaLeft=w*.055;arenaRight=w*.945;arenaBottom=h*.90;dangerY=h*.28;
 
 function drawArena(){
 const w=canvas.clientWidth,h=canvas.clientHeight;
-ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+ctx.clearRect(0,0,w,h);
+/* Background dibuat oleh CSS pada .canvas-9-16, jadi canvas tetap transparan. */
 ctx.strokeStyle='#111';ctx.lineWidth=5;
 ctx.beginPath();ctx.moveTo(arenaLeft,dangerY);ctx.lineTo(arenaLeft,arenaBottom);ctx.stroke();
 ctx.beginPath();ctx.moveTo(arenaRight,dangerY);ctx.lineTo(arenaRight,arenaBottom);ctx.stroke();
